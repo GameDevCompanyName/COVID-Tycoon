@@ -6,5 +6,6 @@ gradle-wrapper.jar
 #Директории
 /.idea/*
 /.gradle/*
+/build/*
 
 #По типу файла
