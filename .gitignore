@@ -1,0 +1,10 @@
+#Отдельные файлы
+gradlew
+gradlew.bat
+gradle-wrapper.jar
+
+#Директории
+/.idea/*
+/.gradle/*
+
+#По типу файла
