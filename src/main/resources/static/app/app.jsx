@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDom from "react-dom";
+import StoreElement from "./components/store-element";
 
 class App extends React.Component {
 
     render() {
-        return <p>Hello, world!</p>
+        return <div>IgorloFlex</div>
     }
 }
 
