@@ -12,3 +12,4 @@ gradle-wrapper.jar
 /src/main/resources/static/node_modules/
 /src/main/resources/static/v8-compile-cache-0/6.2.414.50/
 /src/main/resources/static/generated/
+/src/main/resources/static/package-lock.json

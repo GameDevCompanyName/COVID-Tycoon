@@ -1,9 +1,17 @@
 var packageJSON = require('./package.json');
 var path = require('path');
 var webpack = require('webpack');
+
+const PATHS = {
+    src: path.join(__dirname, '../src'),
+    dist: path.join(__dirname, '../dist'),
+    assets: 'assets/',
+    js: 'js/'
+};
+
 module.exports = {
     devtool: 'source-map',
-    entry: './index.js',
+    entry: './js/index.js',
     output: {
         path: path.join(__dirname, 'generated'),
         filename: 'app-bundle.js'},
@@ -34,4 +42,4 @@ module.exports = {
             poll: true
         }
     }
-}
+};
