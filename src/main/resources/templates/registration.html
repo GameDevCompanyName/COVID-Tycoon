@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Регистрация</title>
+</head>
+
+<body>
+    <form th:action="@{/registration}" modelattribute="userForm" method="post">
+        <div><label> User Name : <input type="text" name="userName"/> </label></div>
+        <div><label> Password: <input type="password" name="pass"/> </label></div>
+        <div><label> Password Confirm: <input type="password" name="passConfirm"/> </label></div>
+        <div><input type="submit" value="Sign In"/></div>
+    </form>
+</body>
+</html>
