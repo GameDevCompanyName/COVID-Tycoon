@@ -9,3 +9,6 @@ gradle-wrapper.jar
 /build/*
 
 #По типу файла
+/src/main/resources/static/node_modules/
+/src/main/resources/static/v8-compile-cache-0/6.2.414.50/
+/src/main/resources/static/generated/
