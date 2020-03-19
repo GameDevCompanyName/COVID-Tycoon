@@ -10,9 +10,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-size: cover;
 }
 
 .login-form-wrapper {
-    max-height: 300px;
-    max-width: 500px;
+    max-height: 400px;
+    max-width: 600px;
+}
+
+.login-header-text {
+    text-align: center;
 }

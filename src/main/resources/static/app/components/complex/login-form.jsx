@@ -3,13 +3,30 @@ import {Button, Form, Input} from "antd";
 import "antd/es/button/style/index.css";
 import "antd/es/form/style/index.css";
 import "antd/es/input/style/index.css";
+import "./login-form.css"
+import createPostRequest from "../../js/common/request";
 
-class LoginForm extends React.Component {
-    render() {
+const layout = {
+    labelCol: {span: 8},
+    wrapperCol: {span: 16},
+};
+const tailLayout = {
+    wrapperCol: {offset: 8, span: 16},
+};
+
+function sendData() {
+
+}
+
+function LoginForm({ onChange, fields }) {
+
         return <Form
-            name="login"
+            fields={fields}
+            onFieldsChange={(changedFields, allFields) => {
+                onChange(allFields);
+            }}
             size="large"
-            //onFinish =
+            {...layout}
             //onFinishFailed =
         >
             <Form.Item
@@ -50,14 +67,15 @@ class LoginForm extends React.Component {
                 <Input.Password/>
             </Form.Item>
 
-            <Form.Item>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </Form.Item>
+            <div className="login-form__submit-button-wrapper">
+                <Form.Item {...tailLayout}>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                </Form.Item>
+            </div>
 
         </Form>
-    }
 }
 
 export default LoginForm;
