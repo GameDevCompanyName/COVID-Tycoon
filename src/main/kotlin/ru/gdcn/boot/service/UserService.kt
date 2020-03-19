@@ -6,48 +6,42 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+
 import ru.gdcn.boot.entity.Role
 import ru.gdcn.boot.entity.RolesType
 import ru.gdcn.boot.entity.User
-
 import ru.gdcn.boot.repository.RoleRepository
 import ru.gdcn.boot.repository.UserRepository
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
 
 
 @Service
 class UserService : UserDetailsService {
     @PersistenceContext
-    lateinit var em: EntityManager
+    private lateinit var em: EntityManager
     @Autowired
-    lateinit var userRepository: UserRepository
+    private lateinit var userRepository: UserRepository
     @Autowired
-    lateinit var roleRepository: RoleRepository
+    private lateinit var roleRepository: RoleRepository
     @Autowired
-    lateinit var bCryptPasswordEncoder: BCryptPasswordEncoder
+    private lateinit var bCryptPasswordEncoder: BCryptPasswordEncoder
 
-    @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(username: String?): UserDetails{
+    @Throws(IllegalArgumentException::class)
+    override fun loadUserByUsername(username: String?): UserDetails {
         if (username == null) {
-            throw UsernameNotFoundException("User not found");
+            throw IllegalArgumentException("Username can't be empty!")
         }
 
         val user = userRepository.findByUserName(username)
 
         if (user.isEmpty) {
-            throw UsernameNotFoundException("User not found");
+            throw UsernameNotFoundException("User does not exist!")
         }
 
         return user.get()
     }
-
-    fun findUserById(usrdId: Long): User {
-        val user = userRepository.findById(usrdId)
-        return user.orElse(User())
-    }
-
-    fun getAllUsers(): List<User> = userRepository.findAll()
 
     fun saveUser(user: User): Boolean {
         val userFromDB = userRepository.findByUserName(user.username)
