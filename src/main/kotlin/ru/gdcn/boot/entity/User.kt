@@ -1,8 +1,8 @@
 package ru.gdcn.boot.entity
 
-import org.hibernate.annotations.Table
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.stereotype.Component
 
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -12,6 +12,7 @@ import javax.validation.constraints.Size
 import javax.persistence.FetchType
 import javax.persistence.ManyToMany
 
+@Component
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_user")
 class User : UserDetails {

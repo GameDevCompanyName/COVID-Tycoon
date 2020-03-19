@@ -1,12 +1,13 @@
 package ru.gdcn.boot.entity
 
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.stereotype.Component
 import javax.persistence.Entity
 
 import javax.persistence.Id
 import javax.persistence.ManyToMany
 
-
+@Component
 @Entity
 @javax.persistence.Table(name = "t_role")
 class Role() : GrantedAuthority {
