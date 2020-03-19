@@ -1,22 +1,16 @@
 import React from "react";
 import ReactDom from "react-dom";
 import {Layout} from "antd";
+import "../../styles/login/login.css"
 import "antd/es/layout/style/index.css";
-
 import LoginForm from "../components/complex/login-form";
 
 class Login extends React.Component {
 
     render() {
         return <div className="login-form-wrapper">
-            <Layout>
-                <Layout>
-                    <h1>Добро пожаловать в игру</h1>
-                </Layout>
-                <Layout>
-                    <LoginForm/>
-                </Layout>
-            </Layout>
+            <h1 className="login-header-text">COVID-Tycoon</h1>
+            <LoginForm/>
         </div>
     }
 }
