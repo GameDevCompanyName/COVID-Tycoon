@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8" http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8"/>
     <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="./styles/registration/registration.css"/>
+    <link rel="stylesheet" type="text/css" href="./styles/common.css"/>
 </head>
 
 <body>
 
-<div id="react"></div>
-<script src="./generated/app-bundle.js"></script>
+<div id="registration-react"></div>
+<script src="./generated/main-generated.js"></script>
 
 <div class="registration-form">
     <form th:action="@{/registration}" modelattribute="userForm" method="post">

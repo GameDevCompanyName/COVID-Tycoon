@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 import ru.gdcn.boot.entity.User
 import ru.gdcn.boot.service.UserService
+import javax.servlet.http.HttpSession
 
 import javax.validation.Valid
 
@@ -24,17 +25,21 @@ class RegistrationController {
     }
 
     @PostMapping("/registration")
-    fun addUser(@ModelAttribute("userForm") @Valid userForm: User, bindingResult: BindingResult, model: Model): String {
+    fun addUser(
+        @ModelAttribute("userForm") @Valid userForm: User,
+        bindingResult: BindingResult,
+        model: Model
+    ): String {
         if (bindingResult.hasErrors()) {
             return "registration"
         }
 
-        if (userForm.password != userForm.passConfirm){
+        if (userForm.password != userForm.passConfirm) {
             model.addAttribute("passwordError", "Пароли не совпадают")
             return "registration"
         }
 
-        if (!userService.saveUser(userForm)){
+        if (!userService.saveUser(userForm)) {
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует")
             return "registration"
         }

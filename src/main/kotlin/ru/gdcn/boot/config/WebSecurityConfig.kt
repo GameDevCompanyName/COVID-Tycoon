@@ -28,12 +28,13 @@ open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         httpSecurity
             .authorizeRequests()
             //Доступ только для не зарегистрированных пользователей
-                .antMatchers("/registration").permitAll()
+                .antMatchers("/registration", "/styles/**", "/generated/**").permitAll()
             //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
 
         httpSecurity
                 .formLogin()
+                .loginPage("/login")
                 .permitAll()
             .and()
                 .logout()

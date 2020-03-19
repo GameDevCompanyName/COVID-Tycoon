@@ -2,23 +2,18 @@ var packageJSON = require('./package.json');
 var path = require('path');
 var webpack = require('webpack');
 
-const PATHS = {
-    src: path.join(__dirname, '../src'),
-    dist: path.join(__dirname, '../dist'),
-    assets: 'assets/',
-    js: 'js/'
-};
-
 module.exports = {
     devtool: 'source-map',
-    entry: './js/index.js',
+    entry: './main.js',
     output: {
         path: path.join(__dirname, 'generated'),
-        filename: 'app-bundle.js'},
+        filename: 'main-generated.js'
+    },
     resolve: {extensions: ['.js', '.jsx']},
     plugins: [
         new webpack.LoaderOptionsPlugin({
-            debug: true}),
+            debug: true
+        }),
         new webpack.DefinePlugin({
             "process.env": {
                 NODE_ENV: JSON.stringify("development")
@@ -31,6 +26,23 @@ module.exports = {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.less$/,
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "less-loader",
+                    options: {
+                        javascriptEnabled: true
+                    }
+                }]
             }
         ]
     },
