@@ -1,8 +1,13 @@
 #Отдельные файлы
+/src/main/resources/static/package-lock.json
 
 #Директории
 /.idea/*
 /.gradle/*
 /build/*
+/src/main/resources/static/node_modules/
+/src/main/resources/static/generated/
 
 #По типу файла
+*.d.ts
+
