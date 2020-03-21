@@ -1,7 +1,7 @@
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
-import LoginForm from "../components/login-form/login-form";
 import LinkButton from "../components/common/LinkButton";
+import LoginForm from "../components/login-form/login-form";
 
 let page = (
     <div>

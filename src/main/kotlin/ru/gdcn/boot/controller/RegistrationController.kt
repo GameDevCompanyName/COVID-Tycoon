@@ -47,14 +47,6 @@ class RegistrationController {
     }
 
     @GetMapping("/")
-    @ResponseBody
-    fun home(principal: Principal): String {
-        return try {
-            return ObjectMapper().writeValueAsString(userService.loadUserByUsername(principal.name) as User)
-        } catch (e: IllegalArgumentException) {
-            "Введено некорретное имя!"
-        } catch (e: UsernameNotFoundException) {
-            "Пользователя не существует!"
-        }
-    }
+    fun home(principal: Principal): String = "index"
+
 }

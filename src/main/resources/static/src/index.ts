@@ -1,3 +1,4 @@
 import "./common.css";
-import "./login/login.tsx";
-import "./registration/registration.tsx";
+import "./views/login.tsx";
+import "./views/registration.tsx";
+import "./views/game.tsx";
