@@ -6,6 +6,8 @@ import javax.persistence.Entity
 
 import javax.persistence.Id
 import javax.persistence.ManyToMany
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @Component
 @Entity
@@ -13,7 +15,11 @@ import javax.persistence.ManyToMany
 class Role() : GrantedAuthority {
     @Id
     var id: Long = -1
+
+    @NotNull
+    @NotBlank
     var name: String = "" //должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER
+
     @Transient
     @ManyToMany(mappedBy = "roles")
     var users: MutableSet<User> = mutableSetOf()
