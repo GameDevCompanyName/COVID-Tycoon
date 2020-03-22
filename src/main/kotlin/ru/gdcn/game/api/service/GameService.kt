@@ -8,6 +8,8 @@ import ru.gdcn.game.api.repository.PlayerRepository
 import ru.gdcn.game.entity.City
 import ru.gdcn.game.entity.Player
 
+import java.util.*
+
 @Service
 class GameService {
     @Autowired
@@ -16,14 +18,7 @@ class GameService {
     @Autowired
     private lateinit var cityRepository: CityRepository
 
-    fun loadPlayerByUserId(userId: Long): Player? {
-        val player = playerRepository.findByUserId(userId)
-        return if (player.isEmpty) {
-            null
-        } else {
-            player.get()
-        }
-    }
+    fun loadPlayerByUserId(userId: Long): Optional<Player> = playerRepository.findByUserId(userId)
 
     fun loadPlayersNameByCityId(cityId: Long): MutableList<String> {
         val players = playerRepository.findByCityId(cityId)
@@ -34,12 +29,5 @@ class GameService {
         return result
     }
 
-    fun loadCityByCityId(cityId: Long): City? {
-        val city = cityRepository.findById(cityId)
-        return if (city.isEmpty) {
-            null
-        } else {
-            city.get()
-        }
-    }
+    fun loadCityByCityId(cityId: Long): Optional<City> = cityRepository.findById(cityId)
 }

@@ -30,18 +30,28 @@ class GameController {
     @ResponseBody
     fun getPlayer(principal: Principal): Response<Player> {
         val user = getUser(principal) ?: return Response(ResponseStatus.ERROR, null)
-        val player = gameService.loadPlayerByUserId(user.id) ?: return Response(ResponseStatus.ERROR, null)
-        return Response(ResponseStatus.OK, player)
+        val player = gameService.loadPlayerByUserId(user.id)
+        return if (player.isEmpty) {
+            Response(ResponseStatus.ERROR, null)
+        } else {
+            Response(ResponseStatus.OK, player.get())
+        }
     }
 
     @GetMapping("/game/city")
     @ResponseBody
     fun getCity(principal: Principal): Response<City> {
         val user = getUser(principal) ?: return Response(ResponseStatus.ERROR, null)
-        val player = gameService.loadPlayerByUserId(user.id) ?: return Response(ResponseStatus.ERROR, null)
-        val city = gameService.loadCityByCityId(player.cityId) ?: return Response(ResponseStatus.ERROR, null)
-        city.players = gameService.loadPlayersNameByCityId(player.cityId)
-        return Response(ResponseStatus.OK, city)
+        val player = gameService.loadPlayerByUserId(user.id)
+        if (player.isEmpty) {
+            return Response(ResponseStatus.ERROR, null)
+        }
+        val city = gameService.loadCityByCityId(player.get().cityId)
+        if (city.isEmpty) {
+            return Response(ResponseStatus.ERROR, null)
+        }
+        city.get().players = gameService.loadPlayersNameByCityId(player.get().cityId)
+        return Response(ResponseStatus.OK, city.get())
     }
 
     private fun getUser(principal: Principal): User? = try {
