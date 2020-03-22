@@ -1,10 +1,9 @@
 package ru.gdcn.game.api.controller
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 import ru.gdcn.boot.entity.User
@@ -16,6 +15,7 @@ import ru.gdcn.game.entity.City
 import ru.gdcn.game.entity.Player
 
 import java.security.Principal
+import java.util.*
 
 @Controller
 class GameController {
@@ -29,8 +29,7 @@ class GameController {
     @GetMapping("/game/player")
     @ResponseBody
     fun getPlayer(principal: Principal): Response<Player> {
-        val user = getUser(principal) ?: return Response(ResponseStatus.ERROR, null)
-        val player = gameService.loadPlayerByUserId(user.id)
+        val player = getPlayerByPrincipal(principal)
         return if (player.isEmpty) {
             Response(ResponseStatus.ERROR, null)
         } else {
@@ -41,8 +40,7 @@ class GameController {
     @GetMapping("/game/city")
     @ResponseBody
     fun getCity(principal: Principal): Response<City> {
-        val user = getUser(principal) ?: return Response(ResponseStatus.ERROR, null)
-        val player = gameService.loadPlayerByUserId(user.id)
+        val player = getPlayerByPrincipal(principal)
         if (player.isEmpty) {
             return Response(ResponseStatus.ERROR, null)
         }
@@ -54,9 +52,33 @@ class GameController {
         return Response(ResponseStatus.OK, city.get())
     }
 
-    private fun getUser(principal: Principal): User? = try {
-        userService.loadUserByUsername(principal.name) as User
+    @PostMapping("/game/randomMove")
+    @ResponseBody
+    fun randomMoveToNewCity(principal: Principal): Response<String> {
+        val player = getPlayerByPrincipal(principal)
+        if (player.isEmpty) {
+            return Response(ResponseStatus.ERROR, null)
+        }
+
+        val dataMove = gameService.movePlayerToRandomCity(player.get())
+        if (dataMove.isEmpty) {
+            return Response(ResponseStatus.ERROR, null)
+        }
+
+        return Response(ResponseStatus.OK, dataMove.get())
+    }
+
+    private fun getUserByPrincipal(principal: Principal): Optional<User> = try {
+        Optional.of(userService.loadUserByUsername(principal.name) as User)
     } catch (e: Exception) {
-        null
+        Optional.empty()
+    }
+
+    private fun getPlayerByPrincipal(principal: Principal): Optional<Player> {
+        val user = getUserByPrincipal(principal)
+        if (user.isEmpty) {
+            return Optional.empty()
+        }
+        return gameService.loadPlayerByUserId(user.get().id)
     }
 }

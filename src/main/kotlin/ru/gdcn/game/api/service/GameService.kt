@@ -1,13 +1,13 @@
 package ru.gdcn.game.api.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import ru.gdcn.game.api.repository.CityRepository
 
+import ru.gdcn.game.api.repository.CityRepository
 import ru.gdcn.game.api.repository.PlayerRepository
 import ru.gdcn.game.entity.City
 import ru.gdcn.game.entity.Player
-import java.lang.IllegalArgumentException
 
 import java.util.*
 
@@ -40,5 +40,30 @@ class GameService {
         }
         playerRepository.save(player)
         return true
+    }
+
+    fun movePlayerToRandomCity(player: Player): Optional<String> {
+        val cites = cityRepository.findAll()
+
+        val updatePlayer: Player
+        try {
+            player.cityId = cites.random().id
+            updatePlayer = playerRepository.save(player)
+        } catch (e: Exception) {
+            return Optional.empty()
+        }
+
+        val city = loadCityByCityId(updatePlayer.cityId)
+        if (city.isEmpty) {
+            return Optional.empty()
+        }
+        city.get().players = loadPlayersNameByCityId(city.get().id)
+
+        val mapper = ObjectMapper()
+        val statusForMove = mapper.createObjectNode()
+        statusForMove.putPOJO("player", updatePlayer)
+        statusForMove.putPOJO("city", city.get())
+
+        return Optional.of(mapper.writeValueAsString(statusForMove))
     }
 }
