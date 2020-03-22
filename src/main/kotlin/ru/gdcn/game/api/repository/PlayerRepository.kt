@@ -11,4 +11,5 @@ import ru.gdcn.game.entity.Player
 interface PlayerRepository : JpaRepository<Player, Long> {
     fun findByUserId(userId: Long): Optional<Player>
     fun findByCityId(cityId: Long): Optional<List<Player>>
+    fun findByName(name: String): Optional<Player>
 }
