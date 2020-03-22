@@ -7,24 +7,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
-
 import ru.gdcn.boot.entity.Role
 import ru.gdcn.boot.entity.RolesType
 import ru.gdcn.boot.entity.User
-import ru.gdcn.boot.repository.RoleRepository
 import ru.gdcn.boot.repository.UserRepository
+
+import java.util.*
 
 
 @Service
 class UserService : UserDetailsService {
-    @PersistenceContext
-    private lateinit var em: EntityManager
     @Autowired
     private lateinit var userRepository: UserRepository
-    @Autowired
-    private lateinit var roleRepository: RoleRepository
+
     @Autowired
     private lateinit var bCryptPasswordEncoder: BCryptPasswordEncoder
 
@@ -43,16 +38,19 @@ class UserService : UserDetailsService {
         return user.get()
     }
 
-    fun saveUser(user: User): Boolean {
+    fun saveUser(user: User): Optional<Long> {
         val userFromDB = userRepository.findByUserName(user.username)
         if (!userFromDB.isEmpty) {
-            return false
+            return Optional.empty()
         }
 
         user.roles = mutableSetOf(Role(1L, RolesType.ROLE_USER))
         user.pass = bCryptPasswordEncoder.encode(user.password)
-        userRepository.save(user)
+        val newId = userRepository.save(user).id
 
-        return true
+        return Optional.of(newId)
     }
+
+    fun deleteUserById(userId: Long) = userRepository.deleteById(userId)
+
 }

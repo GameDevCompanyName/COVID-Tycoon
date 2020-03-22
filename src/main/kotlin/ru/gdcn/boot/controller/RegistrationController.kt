@@ -13,6 +13,9 @@ import ru.gdcn.boot.service.UserService
 
 import javax.validation.Valid
 import org.springframework.web.bind.annotation.ModelAttribute
+import ru.gdcn.game.api.service.GameService
+import ru.gdcn.game.entity.Player
+import java.lang.Exception
 import java.security.Principal
 
 
@@ -20,6 +23,9 @@ import java.security.Principal
 class RegistrationController {
     @Autowired
     private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var gameService: GameService
 
     @GetMapping("/login")
     fun login(principal: Principal?): String {
@@ -49,12 +55,24 @@ class RegistrationController {
             return "registration"
         }
 
-        if (!userService.saveUser(userForm)){
+        val userIdFromDB = userService.saveUser(userForm)
+        if (userIdFromDB.isEmpty){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует")
             return "registration"
         }
 
-        return "redirect:/"
+        return try {
+            val player = Player.createNewDefaultPlayer(userIdFromDB.get(), userForm.username)
+            if (gameService.savePlayer(player)) {
+                "redirect:/"
+            } else {
+                userService.deleteUserById(userIdFromDB.get())
+                "registration"
+            }
+        } catch (e: Exception) {
+            userService.deleteUserById(userIdFromDB.get())
+            "registration"
+        }
     }
 
     @GetMapping("/")

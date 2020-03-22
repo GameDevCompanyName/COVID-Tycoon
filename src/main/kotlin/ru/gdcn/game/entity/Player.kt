@@ -35,4 +35,17 @@ class Player {
     @NotNull
     @JoinColumn(name = "user_id")
     var userId: Long = -1
+
+    companion object {
+        fun createNewDefaultPlayer(userId: Long, userName: String): Player {
+            val player = Player()
+            player.name = userName
+            player.userId = userId
+            player.money = 100
+            player.quantityMask = 1
+            player.quantityVacc = 1
+            player.cityId = 2
+            return player
+        }
+    }
 }
