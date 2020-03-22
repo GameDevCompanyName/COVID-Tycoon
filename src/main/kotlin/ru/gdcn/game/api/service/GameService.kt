@@ -7,6 +7,7 @@ import ru.gdcn.game.api.repository.CityRepository
 import ru.gdcn.game.api.repository.PlayerRepository
 import ru.gdcn.game.entity.City
 import ru.gdcn.game.entity.Player
+import java.lang.IllegalArgumentException
 
 import java.util.*
 
@@ -30,4 +31,14 @@ class GameService {
     }
 
     fun loadCityByCityId(cityId: Long): Optional<City> = cityRepository.findById(cityId)
+
+    @Throws(Exception::class)
+    fun savePlayer(player: Player): Boolean {
+        val playerFromDB = playerRepository.findByName(player.name)
+        if (!playerFromDB.isEmpty) {
+            return false
+        }
+        playerRepository.save(player)
+        return true
+    }
 }
