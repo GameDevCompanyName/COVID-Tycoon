@@ -11,7 +11,9 @@ const PlayerStatus = (props : any) => {
 
     return (
         <div>
-            Player Status
+            <div>Идентификатор = {props.playerData.id}</div>
+            <div>Имя = {props.playerData.name}</div>
+            <div>Деньги = {props.playerData.money}</div>
             <button onClick={handleClick}>
                 Обновить контент
             </button>

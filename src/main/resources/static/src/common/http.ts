@@ -20,4 +20,39 @@ export module http {
         );
     }
 
+    export function contentOfGetRequest(url: string, handler: Function) : void {
+        getRequest(url)
+            .then(response => {
+                let responseContent = JSON.parse(response);
+                let responseResult = new Response(
+                    responseContent.status,
+                    responseContent.entity
+                );
+                returnEntity(responseResult, handler);
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
+
+    export function getEntity(url: string, handler: Function) : void {
+        contentOfGetRequest(url, handler);
+    }
+
+    function returnEntity(response: Response, handler: Function) : void {
+        if (response.status == 200)
+        handler(response.entity);
+    }
+
+    class Response {
+
+        constructor(status: number, entity: Object){
+            this.status = status;
+            this.entity = entity;
+        }
+
+        status: number;
+        entity: Object;
+    }
+
 }
