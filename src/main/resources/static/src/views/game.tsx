@@ -8,6 +8,7 @@ import CityCard from "../components/city-card/city-card";
 import CityActions from "../components/city-actions/city-actions";
 import PlayerStatus from "../components/player-status/player-status";
 import {useEffect, useState} from "react";
+import LinkButton from "../components/common/LinkButton";
 
 const Game = () => {
 
@@ -21,9 +22,9 @@ const Game = () => {
                 <div>
                     <CityActions/>
                     <PlayerStatus callback={updateContent}/>
-                    {text}
                 </div>
             </div>
+            <LinkButton href="/logout" text="Выйти"/>
         </div>
     );
 
