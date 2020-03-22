@@ -1,4 +1,15 @@
-div .city-card__photo-wrapper {
-    /*background: url("./src/public/city.jpg");*/
+.city-card__main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.city-card__photo {
     background: blue;
+    flex-grow: 5;
+}
+
+.city-card__info {
+    flex-grow: 3;
 }
