@@ -2,10 +2,11 @@ package ru.gdcn.game.api.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
 
+import org.springframework.stereotype.Service
 import ru.gdcn.game.api.repository.CityRepository
 import ru.gdcn.game.api.repository.PlayerRepository
+
 import ru.gdcn.game.entity.City
 import ru.gdcn.game.entity.Player
 
@@ -13,11 +14,12 @@ import java.util.*
 
 @Service
 class GameService {
-    @Autowired
-    private lateinit var playerRepository: PlayerRepository
 
     @Autowired
-    private lateinit var cityRepository: CityRepository
+    private lateinit var serviceHelper: ServiceHelper
+
+    private val playerRepository: PlayerRepository by lazy { serviceHelper.playerRepository }
+    private val cityRepository: CityRepository by lazy { serviceHelper.cityRepository }
 
     fun loadPlayerByUserId(userId: Long): Optional<Player> = playerRepository.findByUserId(userId)
 
