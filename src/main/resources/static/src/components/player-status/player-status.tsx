@@ -1,9 +1,12 @@
 import * as React from "react";
 
-const PlayerStatus = () => {
+const PlayerStatus = (props : any) => {
     return (
         <div>
             Player Status
+            <button onClick={props.callback}>
+                Обновить контент
+            </button>
         </div>
     )
 };

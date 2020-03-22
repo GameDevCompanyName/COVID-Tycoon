@@ -1,22 +1,40 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import httpImported = require("../common/http");
+
+
 import GameHeader from "../components/game-header/game-header";
 import CityCard from "../components/city-card/city-card";
 import CityActions from "../components/city-actions/city-actions";
 import PlayerStatus from "../components/player-status/player-status";
+import {useEffect, useState} from "react";
 
-let page = (
-    <div>
-        <GameHeader/>
+const Game = () => {
+
+    const [text, setText] = useState('...');
+
+    let page = (
         <div>
-            <CityCard/>
+            <GameHeader/>
             <div>
-                <CityActions/>
-                <PlayerStatus/>
+                <CityCard cityText={text}/>
+                <div>
+                    <CityActions/>
+                    <PlayerStatus callback={updateContent}/>
+                    {text}
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+
+    function updateContent(){
+        setText("FLEXTIME");
+    }
+
+    return page;
+};
+
+
 
 let root = document.getElementById("react-game-root");
-root && ReactDOM.render(page, root);
+root && ReactDOM.render(<Game/>, root);
