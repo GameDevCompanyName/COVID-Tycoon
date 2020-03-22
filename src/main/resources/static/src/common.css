@@ -2,6 +2,7 @@
     background: #33339911;
     margin: 8px;
     padding: 8px;
+    border-radius: 6px;
 }
 
 .common-styles__input {

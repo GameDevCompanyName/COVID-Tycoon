@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import httpImported = require("../common/http");
 
 
 import GameHeader from "../components/game-header/game-header";
@@ -9,6 +8,8 @@ import CityActions from "../components/city-actions/city-actions";
 import PlayerStatus from "../components/player-status/player-status";
 import {useEffect, useState} from "react";
 import LinkButton from "../components/common/LinkButton";
+import {game} from "../common/game";
+import StoreAction = game.StoreAction;
 
 const Game = () => {
 
@@ -20,13 +21,17 @@ const Game = () => {
             <div>
                 <CityCard cityText={text}/>
                 <div>
-                    <CityActions/>
+                    <CityActions onStoreAction={storeAction}/>
                     <PlayerStatus callback={updateContent}/>
                 </div>
             </div>
             <LinkButton href="/logout" text="Выйти"/>
         </div>
     );
+
+    function storeAction(entryId : string, action : StoreAction) {
+        alert(entryId + action.toString());
+    }
 
     function updateContent(){
         setText("FLEXTIME");
