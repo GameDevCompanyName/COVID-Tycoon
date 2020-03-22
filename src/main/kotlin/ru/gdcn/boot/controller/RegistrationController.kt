@@ -21,8 +21,19 @@ class RegistrationController {
     @Autowired
     private lateinit var userService: UserService
 
+    @GetMapping("/login")
+    fun login(principal: Principal?): String {
+        if (principal != null) {
+            return "redirect:/"
+        }
+        return "login"
+    }
+
     @GetMapping("/registration")
-    fun registration(model: Model): String {
+    fun registration(principal: Principal?, model: Model): String {
+        if (principal != null) {
+            return "redirect:/"
+        }
         model.addAttribute("userForm", User())
         return "registration"
     }

@@ -8,9 +8,10 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Transient
-import javax.validation.constraints.Size
 import javax.persistence.FetchType
 import javax.persistence.ManyToMany
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @Component
 @javax.persistence.Entity
@@ -19,12 +20,19 @@ class User : UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = -1
-    @Size(min=2, message = "Не меньше 5 знаков")
+
+    @NotNull
+    @NotBlank
     var userName: String = ""
-    @Size(min=2, message = "Не меньше 5 знаков")
+
+    @NotNull
+    @NotBlank
     var pass: String = ""
+
     @Transient
     var passConfirm: String = ""
+
+    @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     var roles: MutableSet<Role> = mutableSetOf()
 

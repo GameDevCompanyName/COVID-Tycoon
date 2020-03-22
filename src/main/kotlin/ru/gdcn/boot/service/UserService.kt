@@ -28,8 +28,8 @@ class UserService : UserDetailsService {
     @Autowired
     private lateinit var bCryptPasswordEncoder: BCryptPasswordEncoder
 
-    @Throws(IllegalArgumentException::class)
-    override fun loadUserByUsername(username: String?): UserDetails {
+    @Throws(IllegalArgumentException::class, UsernameNotFoundException::class)
+    override fun loadUserByUsername(username: String?): UserDetails? {
         if (username == null) {
             throw IllegalArgumentException("Username can't be empty!")
         }
